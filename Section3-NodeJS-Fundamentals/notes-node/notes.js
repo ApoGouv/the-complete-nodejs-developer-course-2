@@ -1,29 +1,28 @@
 console.log('Starting notes.js...');
 
-// In ALL node files, we have access to the variable/object "module"
-//console.log(module);
+var addNote = (title, body) => {
+    console.log('Adding note: ', title, body);
+};
 
-// Here we are interesting at: exports: {},
-// in other words: module.exports
+var getAll = () => {
+    console.log('Getting all notes: ');
+};
 
-//module.exports.age = 30;
+var getNote = (title) => {
+    console.log('Fetching note: ', title);
+};
 
-// we can access this variable "age" in the app.js,
-// by using the name of the variable we used to require the notes.js
-// in our example, this is "notes". So, notes.age will return 30
-
-// A more realistic example is to use exports to pass functions
-// to the files we required our file, containing the original function.
-
-module.exports.addNote = () => {
-    console.log('addNote');
-    return 'New note'
+var removeNote = (title) => {
+    console.log('Removing note: ', title);
 };
 
 
-module.exports.add = (a, b) => {
-    console.log('add()');
-    return a + b;
+// export the function we want to use in the app.js
+module.exports = {
+    // ES6: addNote: addNote
+    // When property and value is the same you can just use: addNote
+    addNote,
+    getAll,
+    getNote,
+    removeNote
 };
-
-
