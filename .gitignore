@@ -44,3 +44,6 @@ $RECYCLE.BIN/
 
 # Node
 node_modules/
+
+# Custom
+*API_KEY.js
