@@ -27,14 +27,14 @@ geocode.geocodeAddress(argv.address, (errorMessage, results) => {
     if (errorMessage) {
         console.log(errorMessage);
     } else {
-        console.log(JSON.stringify(results, undefined, 2));
+        console.log(results.address);
+        weather.getWeather(results.latitude, results.longitude, (errorMessage, weatherResults) => {
+            if (errorMessage) {
+                console.log(errorMessage);
+            } else {
+                console.log(`It's currently '${weatherResults.summary}' with thetemperature at ${weatherResults.temperature} Celsius. And it feels like ${weatherResults.apparentTemperature}`);
+            }
+        });
     }
 });
 
-weather.getWeather('40.6177412', '22.9600568', (errorMessage, weatherResults) => {
-    if (errorMessage) {
-        console.log(errorMessage);
-    } else {
-        console.log(JSON.stringify(weatherResults, undefined, 2));
-    }
-});
