@@ -6,11 +6,39 @@
  */
 const express = require('express');
 const hbs = require('hbs');
+const fs = require('fs');
 
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
+
+
+// middleware to keep track of our server requests
+app.use((req, res, next) => {
+    var now = new Date().toString();
+    // log a timestamp + request method + requested path
+    var log = `${now}: ${req.method} ${req.url}`;
+    // log to console the request
+    console.log(log);
+    // save the request to a file
+    fs.appendFile('server.log', log + '\n', (err) => {
+        if (err){
+            console.log('Unable to append to server.log. ', err );
+        }
+    });
+    next();
+});
+
+// middleware - maintenance - Since we do not call 'next()' everything will stop at this page
+// app.use((req, res, next) => {
+//     res.render('maintenance.hbs', {
+//         maintenanceTitle: `We'll be right back`,
+//         maintenanceMessage: 'The site is currently being updated!'
+//     })
+// });
+
+// express middleware: read from a static directory
 app.use(express.static(__dirname + '/public'));
 
 hbs.registerHelper('getCurrentYear', () => {
