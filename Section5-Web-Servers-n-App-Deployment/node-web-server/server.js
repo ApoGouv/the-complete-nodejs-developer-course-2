@@ -8,6 +8,9 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 
+// process.env.PORT: is needed by the Heroku, in order to setup a port
+// otherwise, locally we use port:3000
+const port = process.env.PORT || 3000;
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
@@ -78,7 +81,9 @@ app.get('/bad', (req, res) => {
  * root URL (/) or route.
  * For every other path, it will respond with a 404 Not Found.
  * */
-app.listen(3000, () => {
-    console.log('Server listening on port 3000!');
-    console.log('Visit: http://localhost:3000/');
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}!`);
+    if (port === 3000){
+        console.log(`Visit: http://localhost:${port}/`);
+    }
 });
