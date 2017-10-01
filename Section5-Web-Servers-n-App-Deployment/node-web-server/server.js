@@ -68,6 +68,14 @@ app.get('/about', (req, res) => {
     })
 });
 
+// handler for route: /projects
+app.get('/projects', (req, res) => {
+    res.render('projects.hbs', {
+        pageTitle: 'Portfolio Page',
+        welcomeMessage: 'Grab a coffee and have a look.'
+    })
+});
+
 // handler for route: /bad
 app.get('/bad', (req, res) => {
     res.send({
