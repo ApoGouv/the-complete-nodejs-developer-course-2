@@ -4,7 +4,7 @@
  * Author  : Apostolos Gouvalas
  * Date    : 1/10/2017
  */
-var db = require('./db.js');
+const db = require('./db.js');
 
 
 module.exports.handleSignup = (email, password) => {
