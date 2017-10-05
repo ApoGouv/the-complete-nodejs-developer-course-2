@@ -48,3 +48,4 @@ node_modules/
 # Custom
 *API_KEY.js
 server.log
+/Section7-MongoDB-Mongoose-n-REST_APIs/node-todo-api/server/config/config.json
