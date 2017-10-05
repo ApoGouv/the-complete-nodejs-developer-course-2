@@ -6,12 +6,16 @@
  */
 const path = require('path');
 const fs = require('fs');
+const http = require('http');
 const express = require('express');
+const sockeetIO = require('socket.io');
 
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
 
 var app = new express();
+var server = http.createServer(app);
+var io = sockeetIO(server);
 
 
 // middleware to keep track of our server requests
@@ -33,8 +37,25 @@ var app = new express();
 // express static middleware: read from public directory
 app.use(express.static(publicPath));
 
+/**
+ * io.on( 'event' , cb): lets us to register an event listener
+ * - we can listen for a specific event and do sth, when that event happens
+ *
+ * - the built-in 'connection' event: which let us listen for a new connection
+ *    + meaning that a client connected to the server. And let us do sth when
+ *    + that connection comes
+ */
+io.on('connection', (socket) => {
+  console.log('New user connected.');
 
-app.listen(port, () => {
+  // listen for the 'disconnect' event, from the client side
+  socket.on('disconnect', () => {
+    console.log('User was disconnected.');
+  })
+});
+
+
+server.listen(port, () => {
   console.log(`
  ▂▃▅▇█▓▒░░░░------------░░░░▒▓█▇▅▃▂`);
   console.log(`█   Server listening on port: ${port}`);
