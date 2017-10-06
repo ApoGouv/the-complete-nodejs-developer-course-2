@@ -18,10 +18,16 @@
 </ol>
 <!-- /#messages -->
 
-<form id="message-form" action="">
-    <input name="message" type="text" placeholder="Message" />
-    <button>Send</button>
-</form>
+<div class="form-wrapper">
+    <form id="message-form" action="">
+        <input name="message" type="text" placeholder="Message"/>
+        <button>Send</button>
+    </form>
+    <!-- /form#message-form -->
+</div>
+<!-- /.form-wrapper -->
+
+<button id="send-location">Send Location</button>
 
 <!-- JavaScript -->
 <script src="/socket.io/socket.io.js"></script>
