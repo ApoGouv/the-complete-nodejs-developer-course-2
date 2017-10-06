@@ -66,7 +66,7 @@ io.on('connection', (socket) => {
     // create a 'newMessage' event and send it everywhere
     io.emit('newMessage',  generateMessage(message.from, message.text));
 
-    callback('This is from the Server.');
+    callback();
   });
 
   socket.on('createLocationMessage', (coords) => {
