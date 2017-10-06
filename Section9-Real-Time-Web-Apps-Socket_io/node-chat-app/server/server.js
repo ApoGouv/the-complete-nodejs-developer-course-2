@@ -48,7 +48,7 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
   console.log('New user connected.');
 
-  // emit() let us CREATE our own events and send custom data
+  // emit() let us CREATE our own events and send custom data to ONE connection
   // here we create a 'newMessage' event
   socket.emit('newMessage', {
     from: 'tolios@example.com',
@@ -63,6 +63,14 @@ io.on('connection', (socket) => {
     console.log(`Message: ${message.text}`);
     message.createdAt = new Date().getTime();
     console.log(`At     : ${message.createdAt}`);
+
+    // *io.emit(): let us to emit events to EVERY single Connection
+    // create a 'newMessage' event and send it everywhere
+    io.emit('newMessage', {
+      from: message.from,
+      text: message.text,
+      createdAt: new Date().getTime()
+    })
   });
 
   // listen for the 'disconnect' event, from the client side
