@@ -58,15 +58,16 @@ io.on('connection', (socket) => {
 
 
   // listen for 'createMessage' events
-  socket.on('createMessage', (message) => {
+  socket.on('createMessage', (message, callback) => {
     console.log('~~ createMessage from Client ~~');
-    console.log(`From   : ${message.from}`);
-    console.log(`Message: ${message.text}`);
-    console.log(`At     : ${message.createdAt}`);
+    console.log(message);
 
     // *io.emit(): let us to emit events to EVERY single Connection
     // create a 'newMessage' event and send it everywhere
     io.emit('newMessage',  generateMessage(message.from, message.text));
+
+    callback('This is from the Server.');
+
     // socket.broadcast.emit('newMessage', {
     //   from: message.from,
     //   text: message.text,

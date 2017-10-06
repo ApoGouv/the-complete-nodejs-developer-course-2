@@ -7,12 +7,25 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="">
+    <script src="js/libs/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 <h1>Feeling Chatty??</h1>
 <p>Welcome to the Chatty App</p>
+
+<ol id="messages">
+
+</ol>
+<!-- /#messages -->
+
+<form id="message-form" action="">
+    <input name="message" type="text" placeholder="Message" />
+    <button>Send</button>
+</form>
+
 <!-- JavaScript -->
 <script src="/socket.io/socket.io.js"></script>
+<script src="/js/libs/jquery-3.2.1.min.js"></script>
 <script src="/js/index.js"></script>
 </body>
 </html>
