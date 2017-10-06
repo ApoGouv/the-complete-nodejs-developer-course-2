@@ -48,20 +48,26 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
   console.log('New user connected.');
 
-  // emit() let us CREATE our own events and send custom data to ONE connection
-  // here we create a 'newMessage' event
+  // emit a welcome message when someone connects
   socket.emit('newMessage', {
-    from: 'tolios@example.com',
-    text: 'Hey. What is going on.',
+    from: 'Admin',
+    text: 'Welcome to the chat app',
     createdAt: new Date().getTime()
   });
+
+  // let all connected clients that a new client joined the chat
+  socket.broadcast.emit('newMessage', {
+    from: 'Admin',
+    text: 'New user joined',
+    createdAt: new Date().getTime()
+  });
+
 
   // listen for 'createMessage' events
   socket.on('createMessage', (message) => {
     console.log('~~ createMessage from Client ~~');
     console.log(`From   : ${message.from}`);
     console.log(`Message: ${message.text}`);
-    message.createdAt = new Date().getTime();
     console.log(`At     : ${message.createdAt}`);
 
     // *io.emit(): let us to emit events to EVERY single Connection
@@ -70,7 +76,12 @@ io.on('connection', (socket) => {
       from: message.from,
       text: message.text,
       createdAt: new Date().getTime()
-    })
+     });
+    // socket.broadcast.emit('newMessage', {
+    //   from: message.from,
+    //   text: message.text,
+    //   createdAt: new Date().getTime()
+    // });
   });
 
   // listen for the 'disconnect' event, from the client side
@@ -83,9 +94,9 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
   console.log(`
  ▂▃▅▇█▓▒░░░░--------------░░░░▒▓█▇▅▃▂`);
-  console.log(`█   `,`Server listening on port: ${port}`,`   █`);
+  console.log(`█   `, `Server listening on port: ${port}`, `   █`);
   if (port === 3000) {
-    console.log(`█   `, `Visit: http://localhost:${port}/`,`    █`);
+    console.log(`█   `, `Visit: http://localhost:${port}/`, `    █`);
   }
   console.log(`▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄`);
   console.log('');
