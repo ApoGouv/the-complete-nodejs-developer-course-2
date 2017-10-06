@@ -34,14 +34,19 @@
 
 const moment = require('moment');
 
-var date = moment();
-console.log(date.format());
-console.log(date.format('MMM Do, YYYY '));
-console.log('--------------------------------------');
-// date.add(100, 'years').subtract(9, 'months');
+// var date = moment();
+// console.log(date.format());
 // console.log(date.format('MMM Do, YYYY '));
-console.log('--------------------------------------');
+// console.log('--------------------------------------');
+// // date.add(100, 'years').subtract(9, 'months');
+// // console.log(date.format('MMM Do, YYYY '));
+// console.log('--------------------------------------');
+//
+// var time = moment();
+// // 10:35 am
+// console.log(time.format('h:mm a'));
 
-var time = moment();
-// 10:35 am
-console.log(time.format('h:mm a'));
+var createdAt = moment().valueOf();
+console.log(createdAt);
+var date = moment(createdAt);
+console.log(date);

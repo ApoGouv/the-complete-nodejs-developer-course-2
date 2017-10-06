@@ -19,21 +19,21 @@ socket.on('disconnect', function () {
 // listen for 'newMessage' events
 socket.on('newMessage', function(message) {
   // message holds all the data the server send with this event.
- console.log('~~ newMessage from server ~~');
- console.log(message);
+var formattedTime = moment(message.createdAt).format('h:mm a');
  // create a new list item
  var li = jQuery('<li></li>');
  // set its text to display the message we got
- li.text(`${message.from}: ${message.text}`);
+ li.text(`${message.from} ${formattedTime}: ${message.text}`);
  // display it, by putting it to the end of the list
  jQuery('#messages').append(li);
 });
 
 socket.on('newLocationMessage', function (message) {
+  var formattedTime = moment(message.createdAt).format('h:mm a');
   var li = jQuery('<li></li>');
   var a = jQuery('<a target="_blank">My current location</atarget>');
 
-  li.text(`${message.from}: `);
+  li.text(`${message.from} ${formattedTime}: `);
   a.attr('href', message.url);
   li.append(a);
   jQuery('#messages').append(li);
