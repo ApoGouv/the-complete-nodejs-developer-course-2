@@ -48,6 +48,23 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
   console.log('New user connected.');
 
+  // emit() let us CREATE our own events and send custom data
+  // here we create a 'newMessage' event
+  socket.emit('newMessage', {
+    from: 'tolios@example.com',
+    text: 'Hey. What is going on.',
+    createdAt: new Date().getTime()
+  });
+
+  // listen for 'createMessage' events
+  socket.on('createMessage', (message) => {
+    console.log('~~ createMessage from Client ~~');
+    console.log(`From   : ${message.from}`);
+    console.log(`Message: ${message.text}`);
+    message.createdAt = new Date().getTime();
+    console.log(`At     : ${message.createdAt}`);
+  });
+
   // listen for the 'disconnect' event, from the client side
   socket.on('disconnect', () => {
     console.log('User was disconnected.');
@@ -57,11 +74,11 @@ io.on('connection', (socket) => {
 
 server.listen(port, () => {
   console.log(`
- ▂▃▅▇█▓▒░░░░------------░░░░▒▓█▇▅▃▂`);
-  console.log(`█   Server listening on port: ${port}`);
+ ▂▃▅▇█▓▒░░░░--------------░░░░▒▓█▇▅▃▂`);
+  console.log(`█   `,`Server listening on port: ${port}`,`   █`);
   if (port === 3000) {
-    console.log(`█   Visit: http://localhost:${port}/`);
+    console.log(`█   `, `Visit: http://localhost:${port}/`,`    █`);
   }
-  console.log(`▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄`);
+  console.log(`▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄`);
   console.log('');
 });

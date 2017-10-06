@@ -13,18 +13,6 @@
 <p>Welcome to the Chatty App</p>
 <!-- JavaScript -->
 <script src="/socket.io/socket.io.js"></script>
-<script>
-    var socket = io();
-
-    // listen for the 'connect' event
-    socket.on('connect', () => {
-      console.log('Connected to server.');
-    });
-
-    // listen for the 'disconnect' event
-    socket.on('disconnect', () => {
-        console.log('Disconnected from server.');
-    });
-</script>
+<script src="/js/index.js"></script>
 </body>
 </html>
