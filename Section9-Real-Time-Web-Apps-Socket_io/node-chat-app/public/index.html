@@ -2,81 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Node Chatty App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+    <title>Join | ChatApp</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="/css/styles.css">
-    <script src="js/libs/jquery-3.2.1.min.js"></script>
 </head>
-<body class="chat">
-<div class="chat__sidebar">
-    <h1>Feeling Chatty??</h1>
-    <h3>People</h3>
-    <div id="users">
-
+<body class="centered-form">
+<div class="centered-form__form">
+    <form action="/chat.html">
+    <div class="form-field">
+        <h3>Join a Chat</h3>
     </div>
-    <!-- /#users -->
-</div>
-<!-- /.chat__sidebar -->
-
-<div class="chat__main">
-    <ol id="messages" class="chat__messages">
-
-    </ol>
-    <!-- /#messages -->
-
-    <div class="chat__footer">
-        <form id="message-form" action="">
-            <input name="message" type="text" placeholder="Message" autofocus autocomplete="off"/>
-            <button>Send</button>
-        </form>
-        <!-- /form#message-form -->
-        <button id="send-location">Send location</button>
+    <!-- /.form-field -->
+    <div class="form-field">
+        <label for="display-name">Display name</label>
+        <input type="text" id="display-name" name="name" autofocus />
     </div>
-    <!-- /.form-wrapper -->
-
-
+    <!-- /.form-field -->
+    <div class="form-field">
+        <label for="room-name">Room name</label>
+        <input type="text" id="room-name" name="room" />
+    </div>
+    <!-- /.form-field -->
+    <div class="form-field">
+        <button>Join</button>
+    </div>
+    <!-- /.form-field -->
+    </form>
 </div>
-<!-- /.chat__main -->
+<!-- /.centered-form__form -->
 
-<script id="message-template" type="text/template">
-    <li class="message">
-        <div class="message__title">
-            <h4>{{from}}</h4>
-            <span>{{createdAt}}</span>
-        </div>
-        <!-- /.message__title -->
-        <div class="message__body">
-            <p>{{text}}</p>
-        </div>
-        <!-- /.message__body -->
-    </li>
-    <!-- /.message -->
-</script>
-
-<script id="location-message-template" type="text/template">
-    <li class="message">
-        <div class="message__title">
-            <h4>{{from}}</h4>
-            <span>{{createdAt}}</span>
-        </div>
-        <!-- /.message__title -->
-        <div class="message__body">
-            <p>
-                <a href="{{url}}" target="_blank">My current location</a>
-            </p>
-        </div>
-        <!-- /.message__body -->
-    </li>
-    <!-- /.message -->
-</script>
 
 <!-- JavaScript -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/libs/jquery-3.2.1.min.js"></script>
 <script src="/js/libs/moment.js"></script>
 <script src="/js/libs/mustache.js"></script>
-<script src="/js/index.js"></script>
+<script src="/js/chat.js"></script>
 </body>
 </html>
