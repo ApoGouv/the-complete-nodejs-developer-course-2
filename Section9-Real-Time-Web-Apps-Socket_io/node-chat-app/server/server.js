@@ -90,17 +90,24 @@ io.on('connection', (socket) => {
 
   // listen for 'createMessage' events
   socket.on('createMessage', (message, callback) => {
-    console.log('~~ createMessage from Client ~~');
-    console.log(message);
+    //console.log('createMessage',message);
 
-    // *io.emit(): let us to emit events to EVERY single Connection
-    // create a 'newMessage' event and send it everywhere
-    io.emit('newMessage', generateMessage(message.from, message.text));
+    var user = users.getUser(socket.id);
+
+    if (user && isRealString(message.text)){
+      // create a 'newMessage' event and send it everywhere
+      io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
+    }
+
     callback();
   });
 
   socket.on('createLocationMessage', (coords) => {
-    io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude))
+    var user = users.getUser(socket.id);
+
+    if (user){
+      io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude))
+    }
   });
 
   // listen for the 'disconnect' event, from the client side
@@ -111,7 +118,7 @@ io.on('connection', (socket) => {
       // update the user list
       io.to(user.room).emit('updateUserList', users.getUserList(user.room));
       // display a message to everyone, regarding the user left
-      io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left the room.`));
+      io.to(user.room).emit('newMessage', generateMessage('Admin', `<b>${user.name}</b> - has left the room.`));
     }
     console.log('User was disconnected.');
   })
