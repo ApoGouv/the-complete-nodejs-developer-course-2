@@ -62,7 +62,9 @@ io.on('connection', (socket) => {
 
     socket.join(params.room); // e.g: params.room = 'The IHUs'
     // socket.leave('The IHUs');
+    // remove user from any room. This prevents a user to be in many rooms
     users.removeUser(socket.id);
+    // add a new user
     users.addUser(socket.id, params.name, params.room);
 
     io.to(params.room).emit('updateUserList', users.getUserList(params.room));
@@ -84,7 +86,7 @@ io.on('connection', (socket) => {
     // emit a welcome message when someone connects
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
     // let all connected clients that a new client joined the chat
-    socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} has joined`));
+    socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} - has joined the room.`));
     callback();
   });
 
@@ -92,6 +94,7 @@ io.on('connection', (socket) => {
   socket.on('createMessage', (message, callback) => {
     //console.log('createMessage',message);
 
+    // we will ned the user information
     var user = users.getUser(socket.id);
 
     if (user && isRealString(message.text)){
@@ -103,6 +106,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('createLocationMessage', (coords) => {
+    // we will ned the user information
     var user = users.getUser(socket.id);
 
     if (user){
@@ -112,13 +116,14 @@ io.on('connection', (socket) => {
 
   // listen for the 'disconnect' event, from the client side
   socket.on('disconnect', () => {
+    // remove user on disconnect
     var user = users.removeUser(socket.id);
 
     if (user) {
       // update the user list
       io.to(user.room).emit('updateUserList', users.getUserList(user.room));
       // display a message to everyone, regarding the user left
-      io.to(user.room).emit('newMessage', generateMessage('Admin', `<b>${user.name}</b> - has left the room.`));
+      io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} - has left the room.`));
     }
     console.log('User was disconnected.');
   })
